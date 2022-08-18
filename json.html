@@ -1,0 +1,138 @@
+<table border="1">
+    <input type="hidden" name="" id="id_data">
+    <tr>
+        <td>Enter Name: </td>
+        <td><input type="text" id="name" name="name"></td>
+    </tr>
+    <tr>
+        <td>Enter phone: </td>
+        <td><input type="text" id="phone" name="name"></td>
+    </tr>
+    <tr>
+        <td>Enter gr_id: </td>
+        <td><input type="text" id="grid" name="name"></td>
+    </tr>
+    <tr>
+        <td>Enter grade: </td>
+        <td><input type="text" id="grade" name="name"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" id="submit" onclick="return addValue()"></td>
+    </tr>
+</table>
+<input type="submit" value="view data" onclick="return viewData()">
+<div id="result"></div>
+
+<script>
+    var studant = [
+        // {
+        //     name: 'harsh',
+        //     phone: 346477675,
+        //     gr_id: 3543,
+        //     grade: 'b'
+        // },
+        // {
+        //     name: 'krupal',
+        //     phone: 346477675,
+        //     gr_id: 3543,
+        //     grade: 'a'
+        // },
+        // {
+        //     name: 'kartik',
+        //     phone: 346477675,
+        //     gr_id: 3543,
+        //     grade: 'c'
+        // }
+    ];                                                                                           
+    function addValue() {
+        var data = localStorage.getItem('studantData');
+        let record = JSON.parse(data);  
+
+        var name = document.getElementById('name').value;
+        var phone = document.getElementById('phone').value;
+        var gr = document.getElementById('grid').value;
+        var grade = document.getElementById('grade').value;
+        var id_data = document.getElementById('id_data').value;
+
+        if (id_data == '') {
+            var add = {
+                name: name,
+                phone: phone,
+                gr_id: gr,
+                grade: grade,
+            }
+            studant.push(add);
+        }else{
+            for(var i=0;i<studant.length; i++)
+            {
+                if(studant[i].gr_id==id_data)
+                {
+                    studant[i].name = name;
+                    studant[i].phone = phone;
+                    studant[i].gr_id = gr;
+                    studant[i].grade = grade;
+                }
+            }
+            document.getElementById('submit').value = 'insertdata';
+        }
+        var stu = JSON.stringify(studant);
+        localStorage.setItem('studantData', stu);
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('grid').value = '';
+        document.getElementById('grade').value = '';
+        viewData();
+    };
+
+    function viewData() {
+        var data = localStorage.getItem('studantData');
+        var record = JSON.parse(data);
+        var para = "<table border='1'><tr><td>name</td><td>phone</td><td>gr id</td><td>grade</td><td>action</td></tr>";
+        for (var i = 0; i < record.length; i++) {
+            para += '<tr>';
+            para += '<td>' + record[i].name + '</td>';
+            para += '<td>' + record[i].phone + '</td>';
+            para += '<td>' + record[i].gr_id + '</td>';
+            para += '<td>' + record[i].grade + '</td>';
+            var dp = "'" + record[i].gr_id + "'";
+            para += '<td><a href="javascript:deleteData(' + dp + ')">delete</a> ||';
+            para += '<a href="javascript:updateData('+dp+')">updata</a></td>';
+            para += '</tr>';
+        }
+        para += '</table>';
+        document.getElementById('result').innerHTML = para;
+    }
+
+    function updateData(no){
+        var data = localStorage.getItem('studantData');
+        let record = JSON.parse(data);
+
+        for(var i = 0; i<record.length; i++)
+        {
+            if(record[i].gr_id==no)
+            {
+                document.getElementById('name').value=record[i].name;
+                document.getElementById('phone').value= record[i].phone;
+                document.getElementById('grid').value= record[i].gr_id;
+                document.getElementById('grade').value = record[i].grade;
+                document.getElementById('id_data').value = record[i].gr_id;
+                document.getElementById('submit').value = 'Update record';
+            }
+        }
+    }
+
+
+    function deleteData(a) {
+        var data = localStorage.getItem('studantData');
+        let record = JSON.parse(data);
+        for (var i = 0; i < record.length; i++) {
+            if (record[i].gr_id == a) {
+                record.splice(i, 1);
+            }
+        }
+        var newrecord = JSON.stringify(record);
+        localStorage.setItem('studantData', newrecord);
+        viewData();
+    }
+</script>

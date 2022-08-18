@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do list</title>
+</head>
+
+<body>
+    <table border="1">
+        <tr>
+            <td>Enter work: </td>
+            <td><textarea name="work" id="work" cols="30" rows="5"></textarea></td>
+        </tr>
+        <tr>
+            <td>Enter work type: </td>
+            <td><select name="worktype" id="worktype">
+                    <option value="">--select work--</option>
+                    <option value="family">family</option>
+                    <option value="personal">personal</option>
+                    <option value="professional">professional</option>
+                    <option value="office">office</option>
+                </select></td>
+        </tr>
+        <tr>
+            <td>Enter Date: </td>
+            <td><input type="date" id="date" name="date"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" id="submit" value="Add Work" onclick="addwork()"></td>
+        </tr>
+    </table>
+    <input type="submit" value="view" id="view" onclick=" view()">
+    <div id="result"></div>
+</body>
+<script>
+    var data = [
+        {
+            work: ' Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, asperiores?',
+            worktype: 'personal',
+            date: '2011-11-03',
+            id: '1',
+
+        }
+    ];
+    function addwork() {
+        // var datal = localStorage.getItem('datawork');
+        // var data = JSON.parse(datal);
+
+        var work = document.getElementById('work').value;
+        var worktype = document.getElementById('worktype').value;
+        var date = document.getElementById('date').value;
+        var add = {
+            work: work,
+            worktype: worktype,
+            date: date,
+            id: data.length + 1,    
+        }
+        data.push(add);
+        var stdata = JSON.stringify(data);
+        localStorage.setItem('datawork', stdata);
+        view();
+    }
+
+
+    function view() {
+        var record = localStorage.getItem('datawork');
+        var string = JSON.parse(record);
+        var para = '<table border="1"><tr><td>finish work</td><td>no.</td><td>work</td><td>work type</td><td>date</td><td>delete</td></tr>';
+        for (var i = 0; i < string.length; i++) {
+            para += '<tr id="complete">';
+            para += '<td><input type="checkbox"></td>';
+            para += '<td>' + string[i].id + '</td>';
+            para += '<td>' + string[i].work + '</td>';
+            para += '<td>' + string[i].worktype + '</td>';
+            para += '<td>' + string[i].date + '</td>';
+            para += '<td>' + '<a href="javascript:deletedata(' + string[i].id + ')"> X </a>' + '</td>';
+            para += '</tr>';
+        }
+        para += '</table>';
+        document.getElementById('result').innerHTML = para;
+
+
+        var complete = document.querySelectorAll('#complete');
+        for (var i = 0; i < complete.length; i++) {
+            complete[i].addEventListener('change', completedTask);
+        }
+        var j = 0;
+        function completedTask() {
+            if (j % 2 == 0) {
+                this.style.textDecoration = 'line-through';
+            }
+            else {
+                this.style.textDecoration = '';
+            }
+            j++;
+        }
+
+    }
+
+
+    function deletedata(no) {
+        var record = localStorage.getItem('datawork');
+        var string = JSON.parse(record);
+        for (var i = 0; i < string.length; i++) {
+            if (string[i].id == no) {
+                string.splice(i, 1);
+                alert(no);
+            }
+        }
+        var newrecord = JSON.stringify(string);
+        localStorage.setItem('datawork', newrecord);
+        view();
+    }
+
+
+</script>
+
+</html>
