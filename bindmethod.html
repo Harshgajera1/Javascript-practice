@@ -1,0 +1,52 @@
+<script>
+// jyare 1 object function ne function tarike use karay
+// aama aakhu new function banave
+
+    const obj = {
+        name : 'harsh gajera',
+        content : 'program',
+        bindfun : function(){
+            console.log(`my name is ${this.name}. i worked in learn ${this.content}.`);
+        }
+    }
+    
+    
+    var a = obj.bindfun;
+    a();
+
+    var b = obj.bindfun.bind(obj);
+    b();
+
+
+    const data ={
+        name : 'ronit',
+        content : 'pethani'
+    }
+    var c = obj.bindfun.bind(data);
+    c();
+
+
+    function student(rating){
+        console.log(`my name is ${this.name}. i worked in learn ${this.content}. rating that ${rating}`);
+    }
+
+
+    const data1 ={
+        name : 'urvish',
+        content : 'kevadiya'
+    }
+     const data2 ={
+        name : 'snah',
+        content : 'borda'
+    } 
+     const data3 ={
+        name : 'piyush',
+        content : 'nakrani'
+    }
+    let ans = student.bind(data2);
+    ans(4.7);
+    
+     let ans1 = student.bind(data3);
+    ans1(4.6);
+
+</script>

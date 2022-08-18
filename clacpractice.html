@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 380px;
+            background-color: #ffb8b8;
+            margin: auto;
+            margin-top: 50px;
+            padding: 50px;
+            border-radius: 40px;
+            border: 2px solid;
+
+        }
+
+        .inputtext {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 20px;
+            font-size: 35px;
+            border-radius: 20px;
+        }
+        .btnst {
+            height: 70px;
+            width: 70px;
+            margin: 10px;
+            font-size: 22px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <input type="text" id="output" class="inputtext" style="text-align: right;">
+        <hr>
+
+        <input type="button" class="btnst" id="btn" value="9">
+        <input type="button" class="btnst" id="btn" value="8">
+        <input type="button" class="btnst" id="btn" value="7">
+        <input type="button" class="btnst" id="btn" value="/"><br>
+
+        <input type="button" class="btnst" id="btn" value="6">
+        <input type="button" class="btnst" id="btn" value="5">
+        <input type="button" class="btnst" id="btn" value="4">
+        <input type="button" class="btnst" id="btn" value="*"><br>
+
+        <input type="button" class="btnst" id="btn" value="3">
+        <input type="button" class="btnst" id="btn" value="2">
+        <input type="button" class="btnst" id="btn" value="1">
+        <input type="button" class="btnst" id="btn" value="+"><br>
+
+        <input type="button" class="btnst" id="btn" value="0">
+        <input type="button" class="btnst" id="btn" value="00">
+        <input type="button" class="btnst" id="btn" value="000">
+        <input type="button" class="btnst" id="btn" value="-">
+
+        <input type="button" class="btnst" id="clear" value="C">
+        <input type="button" class="btnst" id="lastremove" value=">_">
+        <input type="button" class="btnst" id="btn" value=".">
+        <input type="button" class="btnst" id="ans" value="="><br>
+
+    </div>
+
+    <script>
+        var btn = document.querySelectorAll('#btn');
+        var display = document.querySelector('#output');
+        var cln = document.querySelector('#clear');
+        var calc = document.querySelector('#ans');
+        var remove = document.querySelector('#lastremove');
+
+        for (var i = 0; i < btn.length; i++) {
+            btn[i].addEventListener('click', function () {
+                var value = display.value;
+                var double = value.charAt(value.length -1);
+                if(double == '+' || double=='*' || double == "." || double == "/" || double == '-'){
+                    if(this.value == '+' || this.value == "-" || this.value == "*" || this.value == "/" || this.value == " ."){
+                    var lv = value.substring(0,value.length-1);
+                    display.value = lv +this.value;
+                    }
+                    else {
+                        display.value += this.value;
+                    }
+                }else{
+                    display.value += this.value;
+                }
+
+            });
+
+        }
+        cln.addEventListener('click', function () {
+            display.value = '';
+        });
+
+        calc.addEventListener('click', function () {
+            display.value = eval(display.value);
+        });
+        remove.addEventListener('click', function () {
+            var value = display.value;
+            display.value = value.slice(0, value.length - 1);
+        });
+
+    </script>
+
+</body>
+
+</html>

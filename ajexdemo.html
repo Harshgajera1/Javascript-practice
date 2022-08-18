@@ -1,0 +1,60 @@
+<h1 style="text-align: center;">welcome to movie zone</h1>
+<label for="">Enter movie name: </label>
+<input type="text" id="name" style="color:blue;font-weight:600">
+<input type="submit" id="submit" value="search" onclick="show()">
+<input type="submit" id="filter" value="filter" onclick="filterData()"><br><br>
+<div id="box" style="display:flex; flex-wrap:wrap;"></div>
+<script src="jquery.min.js"></script>
+<script>
+    let data = '';
+    var name = $('#name').val();
+    function show() {
+        var name = $('#name').val();
+        var post = '';
+        $.ajax({
+            type: 'get',
+            url: 'http://www.omdbapi.com/?i=tt3896198&apikey=cf122f8e&s=' + name,
+            success: function (r) {
+                data = r.Search;
+                // console.log(r.Search[0]);
+                // console.log(r.Search.length);
+                for (var i = 0; i < r.Search.length; i++) {
+                    // console.log(r.Search[i]);
+                    post += "<div>";
+                    post += "<h3 style=' margin-left: 20px;'>"+r.Search[i].Title+"</h3>";
+                    post += "<img src="+r.Search[i].Poster+" style='height: 300;  margin: 20px;'>";
+
+                        // $('img').attr('src',r.Search[1].Poster);
+                        // $('img').attr('src', r.Search[i].Poster);
+                    post += "</div>"
+                    // document.getElementById("+r.Search[i].Title+").
+                }
+                document.getElementById('box').innerHTML = post;
+            }
+        });
+        // $('#name').val('');
+    }
+    function filterData(){
+        // console.log(data[3]);
+        var post = '';
+        var name = $('#name').val();
+
+        for(var i = 0;i<data.length;i++){
+            // console.log(data[i].Title);  
+            var fil = data[i].Title.toLowerCase().includes(name.toLowerCase());
+            console.log(fil);
+            if(fil){
+            document.getElementById('name').innerHTML = fil;
+                   post += "<div>";
+                    post += "<h3 style=' margin-left: 20px;'>"+data[i].Title+"</h3>";
+                    post += "<img src="+data[i].Poster+" style='height: 300;  margin: 20px;'>";
+                        // $('img').attr('src',r.Search[1].Poster);
+                        // $('img').attr('src', r.Search[i].Poster);
+                    post += "</div>"
+            }
+        }
+        document.getElementById('box').innerHTML = post;
+    }
+
+     
+</script>

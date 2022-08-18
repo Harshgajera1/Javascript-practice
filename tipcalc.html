@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tip-calculator</title>
+</head>
+
+<body>
+    <label for="">order name:</label>
+    <select id="itemname">
+        <option value="">--select item--</option>
+        <option value="250">pizza</option>
+        <option value="200">snacks</option>
+        <option value="80">maggi</option>
+        <option value="50">ice-cream</option>
+        <option value="100">Pav Bhaji</option>
+        <option value="120">Manchurian</option>
+        <option value="60">Garlic Bread</option>
+        <option value="70">Coca Cola</option>
+        <option value="30">water</option>
+    </select>
+    <hr>
+
+    <label for="">Quantity</label>
+    <select id="qun">
+        <option value="">--select Quantity--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
+    <h2 id="price"></h2>
+    <hr>
+
+    <label for="">No. of person</label>
+    <select id="person">
+        <option value="">--select persons--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
+    <h2 id="perperson"></h2>
+    <hr>
+    
+    <input type="button" value="tip" id="tip">
+    <h3 id="tipprice"></h3>
+    <hr>
+
+    <input type="button" value="total pay" id="pay">
+    <h2 id="payout"></h2>
+
+    <script>
+        var itemname = document.querySelector('#itemname');
+        var price = document.querySelector('#price');
+        var qun = document.querySelector('#qun');
+        var tip = document.querySelector('#tip');
+        var person = document.querySelector('#person');
+        var pay = document.querySelector('#pay');
+        var bill = document.querySelector('#bill');
+        qun.addEventListener('change', function () {
+            var o = (itemname.value);
+            var q = (qun.value);
+            var p = o * q;
+            document.getElementById('price').innerHTML = 'total price: ' + p;
+            person.addEventListener('click', function () {
+                var per = p/person.value;
+                document.getElementById('perperson').innerHTML ='per person bill: '+ per;
+                });
+            tip.addEventListener('click', function () {
+                if (p >= 0 && p <= 100) {
+                    var tip = 5;
+                    document.getElementById('tipprice').innerHTML = 'test: ' + tip;
+                } else if (p > 100 && p <= 500) {
+                    var tip = 10;
+                    document.getElementById("tipprice").innerHTML = 'tip is: ' + tip;
+                } else if (p > 500 && p <= 1000) {
+                    var tip = 15;
+                    document.getElementById('tipprice').innerHTML = 'tip is: ' + tip;
+                } else if (p > 1000 && p < 2000) {
+                    var tip = 20;
+                    document.getElementById('tipprice').innerHTML = 'tip is: ' + tip;
+                } else {
+                    var tip = 30;
+                    document.getElementById('tipprice').innerHTML = 'tip is: ' + tip;
+                }
+
+                pay.addEventListener('click',function(){
+                var total = p+tip;
+                document.getElementById('payout').innerHTML ='total payable: '+ total;
+            });
+            });
+        });
+    </script>
+</body>
+
+</html>

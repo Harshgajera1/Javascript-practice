@@ -1,0 +1,63 @@
+<style>
+    #box {
+        height: 500px;
+        width: 500px;
+        background-color: blueviolet;
+        margin: auto;
+        margin-top: 50px;
+    }
+    #number{
+        text-align: center ;
+    }
+</style>
+
+<!-- <body id="body"> -->
+    
+
+<div id="box"></div>
+<h1 id="number"></h1>
+
+<script>
+    var box = document.querySelector('#box');
+    var color = ['red','blue','green','yellow','orange','coral'];
+    var i=0;
+    var num= document.querySelector('#number');
+    var j = 1;
+
+    
+    box.addEventListener('click',function(){
+        if(color.length== i){
+            i=0;
+        }
+        box.style.backgroundColor = color[i];
+        i++;
+        console.log(j);
+        document.getElementById('number').innerHTML= 'you clicked ' + j + ' times';
+        j++;
+    });
+
+    // var body = document.querySelector('#body');
+    // var color = ['black','white'];
+    // var i=0;
+
+    // body.addEventListener('click',function(){
+    //     if(color.length == i){
+    //         i= 0;   
+    //     }
+    //     body.style.backgroundColor= color[i];
+    //     i++;
+    // });
+
+    
+    // box.addEventListener('click',function(){
+    //     box.style.backgroundColor = color[i];
+    //     console.log(color[i]);
+    //     i++;
+    //     // if(color.length == i){
+    //     //     i=0;
+    //     // }
+    // });
+  
+</script>
+
+</body>
